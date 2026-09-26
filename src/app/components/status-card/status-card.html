@@ -1,0 +1,38 @@
+<article class="status-card" [attr.data-level]="state.health">
+  <div class="card-head">
+    <div>
+      <span class="label">ESTADO DEL ACTIVO</span>
+      <h2>Motor principal</h2>
+    </div>
+    <span class="asset-id">MX-204</span>
+  </div>
+
+  <div class="machine-visual" aria-hidden="true">
+    <div class="orbit orbit-one"></div>
+    <div class="orbit orbit-two"></div>
+    <svg viewBox="0 0 280 164" role="img">
+      <defs>
+        <linearGradient id="machineBody" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="currentColor" stop-opacity="0.82" />
+          <stop offset="1" stop-color="currentColor" stop-opacity="0.16" />
+        </linearGradient>
+      </defs>
+      <path class="base" d="M49 126h183l17 17H31l18-17Z" />
+      <path class="body" d="M72 42h116c15 0 27 12 27 27v57H55V59c0-9 8-17 17-17Z" />
+      <path class="cap" d="M55 70H37v46h18M215 82h20v32h-20" />
+      <circle class="core" cx="134" cy="85" r="28" />
+      <path class="blade" d="m134 60 7 19 20-3-15 13 10 18-22-10-22 10 10-18-15-13 20 3 7-19Z" />
+      <path class="detail" d="M75 54h18m-18 10h27m82 46h18" />
+    </svg>
+    <span class="machine-glow"></span>
+  </div>
+
+  <div class="status-strip">
+    <span class="status-icon"><i></i></span>
+    <div>
+      <span class="label">CONDICIÓN ACTUAL</span>
+      <strong>{{ statusLabel }}</strong>
+    </div>
+    <span class="level-tag">{{ state.health }}</span>
+  </div>
+</article>

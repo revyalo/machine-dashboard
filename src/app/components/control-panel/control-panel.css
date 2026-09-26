@@ -1,0 +1,133 @@
+.control-panel {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  min-height: 104px;
+  box-sizing: border-box;
+  padding: 18px 20px;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+
+.control-copy {
+  display: grid;
+  min-width: 150px;
+  gap: 5px;
+}
+
+.control-copy span,
+.test-actions > span {
+  color: var(--text-soft);
+  letter-spacing: 0.13em;
+  font-size: 0.57rem;
+  font-weight: 800;
+}
+
+.control-copy strong {
+  font-size: 0.79rem;
+  font-weight: 580;
+}
+
+.primary-actions,
+.test-actions {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+
+.button,
+.test-actions button {
+  min-height: 42px;
+  padding: 0 15px;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface-soft);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 650;
+  transition:
+    transform 140ms ease,
+    border-color 140ms ease,
+    opacity 140ms ease;
+}
+
+.button {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+}
+
+.button svg {
+  width: 15px;
+  fill: currentColor;
+}
+
+.button-start {
+  color: #05221e;
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--accent) 17%, transparent);
+}
+
+.button-stop:hover,
+.test-actions button:first-of-type:hover {
+  color: var(--critical);
+  border-color: color-mix(in srgb, var(--critical) 45%, transparent);
+}
+
+.button:hover:not(:disabled),
+.test-actions button:hover {
+  transform: translateY(-1px);
+}
+
+.button:focus-visible,
+.test-actions button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+.test-actions {
+  gap: 6px;
+  margin-left: auto;
+  padding-left: 16px;
+  border-left: 1px solid var(--border);
+}
+
+.test-actions > span {
+  margin-right: 3px;
+}
+
+.test-actions button {
+  min-height: 34px;
+  padding: 0 9px;
+  color: var(--text-soft);
+  font-size: 0.62rem;
+}
+
+@media (max-width: 780px) {
+  .control-panel {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .primary-actions,
+  .test-actions {
+    flex-wrap: wrap;
+  }
+
+  .test-actions {
+    margin-left: 0;
+    padding: 13px 0 0;
+    border-top: 1px solid var(--border);
+    border-left: 0;
+  }
+}

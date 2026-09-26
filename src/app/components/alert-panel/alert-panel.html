@@ -1,0 +1,32 @@
+<article class="panel">
+  <div class="panel-head">
+    <div>
+      <span>EVENTOS</span>
+      <h3>Alertas del sistema</h3>
+    </div>
+    <span class="counter">{{ alerts.length }}</span>
+  </div>
+
+  @if (alerts.length) {
+    <div class="alert-list" aria-live="polite">
+      @for (alert of alerts; track alert.id) {
+        <div class="alert-item" [attr.data-severity]="alert.severity">
+          <span class="alert-symbol">!</span>
+          <div>
+            <strong>{{ alert.title }}</strong>
+            <p>{{ alert.message }}</p>
+          </div>
+          <time>{{ alert.timestamp | date: 'HH:mm' }}</time>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="all-clear" role="status">
+      <span class="checkmark">✓</span>
+      <div>
+        <strong>Sin alertas activas</strong>
+        <p>{{ message }}</p>
+      </div>
+    </div>
+  }
+</article>

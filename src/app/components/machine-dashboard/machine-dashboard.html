@@ -1,0 +1,151 @@
+<main class="dashboard" [class.light-theme]="theme() === 'light'">
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#overview" aria-label="Ir al resumen de NEXUS Monitor">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" role="img">
+          <path d="M7 22.5 16 6l9 16.5-4.6 2.7L16 17l-4.4 8.2L7 22.5Z" />
+        </svg>
+      </span>
+      <span>
+        <strong>NEXUS</strong>
+        <small>MONITOR</small>
+      </span>
+    </a>
+
+    <div class="topbar-meta">
+      <div class="plant-label">
+        <span>PLANTA</span>
+        <strong>Madrid · Línea 04</strong>
+      </div>
+      <div class="divider"></div>
+      <div class="live-indicator" [class.offline]="state().status !== MachineStatus.Running">
+        <span class="live-dot"></span>
+        {{ state().status === MachineStatus.Running ? 'TELEMETRÍA EN VIVO' : 'EN ESPERA' }}
+      </div>
+      <button
+        class="icon-button"
+        type="button"
+        (click)="toggleTheme()"
+        [attr.aria-label]="theme() === 'dark' ? 'Activar tema claro' : 'Activar tema oscuro'"
+      >
+        @if (theme() === 'dark') {
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7m10 10 1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"
+            />
+            <circle cx="12" cy="12" r="4" />
+          </svg>
+        } @else {
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.5 15.2A8.5 8.5 0 0 1 8.8 3.5 8.5 8.5 0 1 0 20.5 15.2Z" />
+          </svg>
+        }
+      </button>
+    </div>
+  </header>
+
+  <section class="content" id="overview">
+    <div class="intro-row">
+      <div>
+        <p class="eyebrow"><span></span> CENTRO DE OPERACIONES</p>
+        <h1>Supervisión de máquina <em>MX-204</em></h1>
+        <p class="subtitle">
+          Rendimiento, condición térmica y señales operativas en una sola vista.
+        </p>
+      </div>
+      <p class="last-update">
+        ÚLTIMA LECTURA
+        <strong>{{ state().timestamp | date: 'HH:mm:ss' }}</strong>
+      </p>
+    </div>
+
+    <section class="overview-grid" aria-label="Resumen operativo">
+      <app-status-card [state]="state()" />
+
+      <div class="metrics-column">
+        <div class="metric-grid">
+          <app-telemetry-card
+            label="TEMPERATURA"
+            [value]="state().temperature"
+            unit="°C"
+            icon="temperature"
+            [level]="state().health"
+            [detail]="'Límite ' + config().criticalTemperature + ' °C'"
+          />
+          <app-telemetry-card
+            label="VELOCIDAD"
+            [value]="state().rpm"
+            unit="RPM"
+            icon="speed"
+            [level]="state().health"
+            [detail]="'Objetivo 1.560 RPM'"
+            [integer]="true"
+          />
+          <app-telemetry-card
+            label="TIEMPO ACTIVO"
+            [value]="state().uptimeSeconds / 60"
+            unit="MIN"
+            icon="clock"
+            [level]="state().status === MachineStatus.Running ? 'normal' : 'stopped'"
+            detail="Sesión actual"
+          />
+        </div>
+
+        <app-control-panel
+          [status]="state().status"
+          (startRequested)="startMachine()"
+          (stopRequested)="stopMachine()"
+          (faultRequested)="simulateFault()"
+          (disconnectRequested)="simulateDisconnect()"
+          (resetRequested)="resetSystem()"
+        />
+      </div>
+    </section>
+
+    <section class="section-block" aria-labelledby="analytics-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow"><span></span> HISTÓRICO RECIENTE</p>
+          <h2 id="analytics-heading">Tendencias de telemetría</h2>
+        </div>
+        <button class="text-button" type="button" (click)="clearHistory()">
+          Limpiar histórico
+        </button>
+      </div>
+
+      <div class="chart-grid">
+        <app-telemetry-chart
+          title="Temperatura"
+          unit="°C"
+          color="#f6b94f"
+          [values]="history()"
+          valueKey="temperature"
+          [minimum]="20"
+          [maximum]="105"
+        />
+        <app-telemetry-chart
+          title="Velocidad del motor"
+          unit="RPM"
+          color="#3dd9c5"
+          [values]="history()"
+          valueKey="rpm"
+          [minimum]="0"
+          [maximum]="2200"
+        />
+      </div>
+    </section>
+
+    <section class="lower-grid">
+      <app-alert-panel [alerts]="alerts()" [message]="state().lastMessage" />
+      <app-settings-panel [config]="config()" (configChanged)="updateConfig($event)" />
+    </section>
+  </section>
+
+  <footer>
+    <span>NEXUS Industrial Systems</span>
+    <span>SIMULADOR · ANGULAR + RXJS</span>
+  </footer>
+</main>

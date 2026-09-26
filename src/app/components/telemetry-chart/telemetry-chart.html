@@ -1,0 +1,46 @@
+<article class="chart-card" [style.--chart-color]="color">
+  <div class="chart-head">
+    <div>
+      <span>TENDENCIA</span>
+      <h3>{{ title }}</h3>
+    </div>
+    <p>
+      <strong>{{ latest | number: (valueKey === 'rpm' ? '1.0-0' : '1.1-1') }}</strong>
+      {{ unit }}
+    </p>
+  </div>
+
+  <div class="chart-wrap">
+    @if (points) {
+      <svg
+        [attr.viewBox]="'0 0 ' + chartWidth + ' ' + chartHeight"
+        role="img"
+        [attr.aria-label]="title + ': ' + latest + ' ' + unit"
+      >
+        <defs>
+          <linearGradient [attr.id]="valueKey + '-area'" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="var(--chart-color)" stop-opacity="0.25" />
+            <stop offset="1" stop-color="var(--chart-color)" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+        <g class="grid-lines">
+          <path d="M18 24H622M18 70H622M18 116H622M18 162H622" />
+          <path d="M125 12V163M245 12V163M365 12V163M485 12V163" />
+        </g>
+        <polygon [attr.points]="areaPoints" [attr.fill]="'url(#' + valueKey + '-area)'" />
+        <polyline class="data-line glow" [attr.points]="points" />
+        <polyline class="data-line" [attr.points]="points" />
+      </svg>
+    } @else {
+      <div class="empty-chart">
+        <span></span>
+        Inicia la máquina para registrar lecturas
+      </div>
+    }
+  </div>
+
+  <div class="chart-foot">
+    <span>−{{ values.length > 1 ? (values.length - 1) * 1.6 : (0 | number: '1.0-0') }} s</span>
+    <span>AHORA</span>
+  </div>
+</article>

@@ -1,0 +1,65 @@
+<article class="panel">
+  <div class="panel-head">
+    <div>
+      <span>CONFIGURACIÓN</span>
+      <h3>Parámetros operativos</h3>
+    </div>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
+      <path
+        d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6 1.7 1.7 0 0 0 10 3v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"
+      />
+    </svg>
+  </div>
+
+  <div class="settings-grid">
+    <label>
+      <span>Intervalo</span>
+      <select [value]="config.intervalMs" (change)="update('intervalMs', $event)">
+        <option value="800">0,8 s</option>
+        <option value="1600">1,6 s</option>
+        <option value="3000">3 s</option>
+      </select>
+    </label>
+    <label>
+      <span>Aviso térmico</span>
+      <span class="input-wrap">
+        <input
+          type="number"
+          min="40"
+          max="100"
+          [value]="config.warningTemperature"
+          (change)="update('warningTemperature', $event)"
+        />
+        <i>°C</i>
+      </span>
+    </label>
+    <label>
+      <span>Temperatura crítica</span>
+      <span class="input-wrap">
+        <input
+          type="number"
+          min="50"
+          max="120"
+          [value]="config.criticalTemperature"
+          (change)="update('criticalTemperature', $event)"
+        />
+        <i>°C</i>
+      </span>
+    </label>
+    <label>
+      <span>RPM máximas</span>
+      <span class="input-wrap">
+        <input
+          type="number"
+          min="1000"
+          max="3000"
+          step="50"
+          [value]="config.maximumRpm"
+          (change)="update('maximumRpm', $event)"
+        />
+        <i>RPM</i>
+      </span>
+    </label>
+  </div>
+</article>

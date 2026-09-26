@@ -1,0 +1,36 @@
+<section class="control-panel" aria-label="Controles de la máquina">
+  <div class="control-copy">
+    <span>CONTROL REMOTO</span>
+    <strong>Secuencia de operación</strong>
+  </div>
+
+  <div class="primary-actions">
+    <button
+      data-testid="start-button"
+      class="button button-start"
+      type="button"
+      [disabled]="status === MachineStatus.Running"
+      (click)="startRequested.emit()"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 7 8 5-8 5V7Z" /></svg>
+      Iniciar máquina
+    </button>
+    <button
+      data-testid="stop-button"
+      class="button button-stop"
+      type="button"
+      [disabled]="status === MachineStatus.Stopped"
+      (click)="stopRequested.emit()"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8h8v8H8z" /></svg>
+      Detener
+    </button>
+  </div>
+
+  <div class="test-actions">
+    <span>PRUEBAS</span>
+    <button type="button" (click)="faultRequested.emit()">Simular fallo</button>
+    <button type="button" (click)="disconnectRequested.emit()">Desconectar</button>
+    <button type="button" (click)="resetRequested.emit()">Restablecer</button>
+  </div>
+</section>
